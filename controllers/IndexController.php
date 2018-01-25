@@ -11,9 +11,7 @@ class IndexController extends Controller
 {
     public function actionIndex()
     {
-//        echo "index/index";
-        $model=new Test;
-        $data=$model->find()->one();
-        return $this->render("index",array("row"=>$data));
+        $this->layout=false;
+        return $this->render("index");
     }
 }
