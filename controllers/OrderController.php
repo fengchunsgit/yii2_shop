@@ -12,11 +12,13 @@ class OrderController extends Controller
 {
     public function actionCheck()
     {
-        return $this->renderPartial('check');
+        $this->layout='layout1';
+        return $this->render('check');
     }
 
     public function actionIndex()
     {
-        return $this->renderPartial('index');
+        $this->layout='layout2';
+        return $this->render('index');
     }
 }

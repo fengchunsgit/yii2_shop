@@ -14,12 +14,14 @@ class ProductController extends Controller
 {
     public function actionIndex()
     {
-        return $this->renderpartial('index');
+        $this->layout='layout2';
+        return $this->render('index');
     }
 
     public function actionDetail()
     {
-        return $this->renderPartial('detail');
+        $this->layout='layout2';
+        return $this->render('detail');
     }
 
 }
