@@ -14,4 +14,9 @@ class OrderController extends Controller
     {
         return $this->renderPartial('check');
     }
+
+    public function actionIndex()
+    {
+        return $this->renderPartial('index');
+    }
 }
