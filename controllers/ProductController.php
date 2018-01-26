@@ -17,4 +17,9 @@ class ProductController extends Controller
         return $this->renderpartial('index');
     }
 
+    public function actionDetail()
+    {
+        return $this->renderPartial('detail');
+    }
+
 }
