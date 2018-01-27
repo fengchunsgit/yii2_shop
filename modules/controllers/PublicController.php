@@ -9,12 +9,13 @@
 namespace app\modules\controllers;
 
 use yii\web\Controller;
-
+use app\modules\models\Admin;
 class PublicController extends Controller
 {
     public function actionLogin()
     {
         $this->layout=false;
-        return $this->render('login');
+        $model=new Admin;
+        return $this->render('login',['model'=>$model]);
     }
 }
