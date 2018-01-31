@@ -74,8 +74,22 @@ class Admin extends ActiveRecord
       $this->scenario="seekpass";
       if($this->load($data) && $this->validate()){
           //do something
+        $time=time();
+        $token=$this->createToken($data['Admin']['adminuser'],$time);
+        $mailer=Yii::$app->mailer->compose('seekpass',['adminuser'=>$data['Admin']['adminuser'],'time'=>$time,'token'=>$token]);
+        $mailer->setFrom('917933590@qq.com');
+        $mailer->setTo($data['Admin']['adminemail']);
+        $mailer->setSubject('慕课商城-找回密码');
+        if($mailer->send()){
+          return true;
+        }
       }
       return false;
+    }
+
+    public function createToken($adminuser,$time)
+    {
+      return md5(md5($adminuser).base64_encode(Yii::$app->request->userIP).md5($time));
     }
 
 
