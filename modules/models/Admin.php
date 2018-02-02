@@ -99,7 +99,7 @@ class Admin extends ActiveRecord
     {
       $this->scenario='changepass';
       if($this->load($data) && $this->validate()){
-        return(bool)$this->updateAll(['adminpass'=>md5($this->adminuser)],'adminuser=:user',[':user'=>$this->adminuser]);
+        return (bool)$this->updateAll(['adminpass'=>md5($this->adminuser)],'adminuser=:user',[':user'=>$this->adminuser]);
       }
       return false;
     }

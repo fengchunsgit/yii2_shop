@@ -37,4 +37,11 @@ class ManageController extends Controller
 
   }
 
+  public function actionManagers()
+  {
+    $this->layout='layout1';
+    $managers=Admin::find()->all();
+    return $this->render('managers',['managers'=>$managers]);
+  }
+
 }
