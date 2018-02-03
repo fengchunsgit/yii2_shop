@@ -50,4 +50,21 @@ class ManageController extends Controller
     return $this->render('managers',['managers'=>$managers,'pager'=>$pager]);
   }
 
+  public function actionReg()
+  {
+    $this->layout='layout1';
+    $model=new Admin;
+    if(Yii::$app->request->isPost){
+      $post=Yii::$app->request->post();
+      if($model->reg($post)){
+        Yii::$app->session->setFlash('info','添加成功');
+      }else{
+        Yii::$app->session->setFlash('info','添加失败');
+      }
+    }
+    $model->adminpass='';
+    $model->repass='';
+    return $this->render('reg',['model'=>$model]);
+  }
+
 }
