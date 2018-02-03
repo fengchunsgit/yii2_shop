@@ -67,4 +67,17 @@ class ManageController extends Controller
     return $this->render('reg',['model'=>$model]);
   }
 
+  public function actionDel()
+  {
+    $adminid=Yii::$app->request->get('adminid');
+    if($adminid==''){
+      $this->redirect(['manage/managers']);
+    }
+    $model=new Admin;
+    if($model->deleteAll('adminid=:id',['id'=>$adminid])){
+      Yii::$app->session->setFlash('info','删除成功');
+      $this->redirect(['manage/managers']);
+    }
+  }
+
 }
