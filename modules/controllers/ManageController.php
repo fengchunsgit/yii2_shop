@@ -83,6 +83,7 @@ class ManageController extends Controller
   public function actionChangeemail()
   {
     $this->layout='layout1';
+    $model=new Admin;
     $model=Admin::find()->where('adminuser=:user',[':user'=>Yii::$app->session['admin']['adminuser']])->one();
     if(Yii::$app->request->isPost){
       $post=Yii::$app->request->post();
@@ -90,7 +91,7 @@ class ManageController extends Controller
         Yii::$app->session->setFlash('info','修改成功');
       }
     }
-    // $model->adminpass='';
+    $model->adminpass='';
     return $this->render('changeemail',['model'=>$model]);
 
   }

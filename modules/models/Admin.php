@@ -133,7 +133,7 @@ class Admin extends ActiveRecord
     {
       $this->scenario='changeemail';
       if($this->load($data) && $this->validate()){
-        return (bool)$this->updateAll(['adminemail'=>$this->adminemail,'adminuser=:user',[':user'=>$this->adminuser]]);
+        return (bool)$this->updateAll(['adminemail'=>$this->adminemail],'adminuser=:user',[':user'=>$this->adminuser]);
       }
       return false;
     }
