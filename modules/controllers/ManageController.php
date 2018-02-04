@@ -83,7 +83,7 @@ class ManageController extends Controller
   public function actionChangeemail()
   {
     $this->layout='layout1';
-    $model=new Admin;
+    // $model=new Admin; 这里没有这行也是可以的，应该可以直接使用下面方法
     $model=Admin::find()->where('adminuser=:user',[':user'=>Yii::$app->session['admin']['adminuser']])->one();
     if(Yii::$app->request->isPost){
       $post=Yii::$app->request->post();
