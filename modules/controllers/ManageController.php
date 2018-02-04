@@ -96,4 +96,19 @@ class ManageController extends Controller
 
   }
 
+  public function actionChangepass()
+  {
+    $this->layout='layout1';
+    $model=Admin::find()->where('adminuser=:user',[':user'=>Yii::$app->session['admin']['adminuser']])->one();
+    if(Yii::$app->request->isPost){
+      $post=Yii::$app->request->post();
+      if($model->changepass($post)){
+        Yii::$app->session->setFlash('info','修改成功');
+      }
+    }
+    $model->adminpass='';
+    $model->repass='';
+    return $this->render('changepass',['model'=>$model]);
+  }
+
 }
