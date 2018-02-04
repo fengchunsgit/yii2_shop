@@ -136,8 +136,8 @@
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="/index.php?r=admin%2Fmanage%2Fchangeemail">个人信息管理</a></li>
-                    <li><a href="/index.php?r=admin%2Fmanage%2Fchangepass">修改密码</a></li>
+                    <li><a href="<?php echo yii\helpers\Url::to(['manage/changeemail'])?>">个人信息管理</a></li>
+                    <li><a href="#">修改密码</a></li>
                     <li><a href="#">订单管理</a></li>
                 </ul>
             </li>
@@ -164,7 +164,7 @@
                 <div class="arrow"></div>
                 <div class="arrow_border"></div>
             </div>
-            <a href="index.html">
+            <a href="<?php echo yii\helpers\Url::to(['default/index'])?>">
                 <i class="icon-home"></i>
                 <span>后台首页</span>
             </a>

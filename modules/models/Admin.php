@@ -32,13 +32,13 @@ class Admin extends ActiveRecord
     public function rules()
     {
       return [
-        ['adminuser','required','message'=>'管理员账号不能为空','on'=>['login','seekpass','changepass','adminadd']],
-        ['adminpass','required','message'=>'管理员密码不能为空','on'=>['login','changepass','adminadd']],
+        ['adminuser','required','message'=>'管理员账号不能为空','on'=>['login','seekpass','changepass','adminadd','changeemail']],
+        ['adminpass','required','message'=>'管理员密码不能为空','on'=>['login','changepass','adminadd','changeemail']],
         ['rememberMe','boolean','on'=>'login'],
-        ['adminpass','validatePass','on'=>'login'],
-        ['adminemail','required','message'=>'电子邮箱不能为空','on'=>['seekpass','adminadd']],
-        ['adminemail','email','message'=>'电子邮箱格式不正确','on'=>['seekpass','adminadd']],
-        ['adminemail','unique','message'=>'电子邮箱已被注册','on'=>'adminadd'],
+        ['adminpass','validatePass','on'=>['login','changeemail']],
+        ['adminemail','required','message'=>'电子邮箱不能为空','on'=>['seekpass','adminadd','changeemail']],
+        ['adminemail','email','message'=>'电子邮箱格式不正确','on'=>['seekpass','adminadd','changeemail']],
+        ['adminemail','unique','message'=>'电子邮箱已被注册','on'=>['adminadd','changeemail']],
         ['adminuser','unique','message'=>'用户名已被注册','on'=>'adminadd'],
         ['adminemail','validateEmail','on'=>'seekpass'],
         ['repass','required','message'=>'确认密码不能为空','on'=>['changepass','adminadd']],
@@ -125,6 +125,15 @@ class Admin extends ActiveRecord
           return true;
         }
         return false;
+      }
+      return false;
+    }
+
+    public function changeemail($data)
+    {
+      $this->scenario='changeemail';
+      if($this->load($data) && $this->validate()){
+        return (bool)$this->updateAll(['adminemail'=>$this->adminemail,'adminuser=:user',[':user'=>$this->adminuser]]);
       }
       return false;
     }
