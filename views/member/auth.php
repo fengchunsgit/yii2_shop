@@ -94,3 +94,10 @@
 	</div><!-- /.container -->
 </main><!-- /.authentication -->
 <!-- ========================================= MAIN : END ========================================= -->		<!-- ============================================================= FOOTER ============================================================= -->
+<script>
+  var path=document.getElementById('login_qq');
+  qqbtn.onclick=function(){
+    window.location.href="<? echo yii\helpers\Url::to([member/qqlogin])?>"
+  }
+
+</script>
