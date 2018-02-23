@@ -9,6 +9,11 @@
                     <a href="/index.php?r=admin%2Fcategory%2Fadd" class="btn-flat success pull-right">
                         <span>&#43;</span>添加新分类</a></div>
             </div>
+            <?php //显示提示信息
+              if(Yii::$app->session->hasFlash('info')){
+                echo Yii::$app->session->getFlash('info');
+              }
+             ?>
             <!-- Users table -->
             <div class="row-fluid table">
                 <table class="table table-hover">
@@ -23,54 +28,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- row -->
-                        <tr class="first">
-                            <td>1</td>
-                            <td>|-----服装</td>
-                            <td class="align-right">
-                                <a href="/index.php?r=admin%2Fcategory%2Fmod&cateid=1">编辑</a>
-                                <a href="/index.php?r=admin%2Fcategory%2Fdel&cateid=1">删除</a></td>
-                        </tr>
-                        <tr class="first">
-                            <td>2</td>
-                            <td>|-----|-----上衣</td>
-                            <td class="align-right">
-                                <a href="/index.php?r=admin%2Fcategory%2Fmod&cateid=2">编辑</a>
-                                <a href="/index.php?r=admin%2Fcategory%2Fdel&cateid=2">删除</a></td>
-                        </tr>
-                        <tr class="first">
-                            <td>3</td>
-                            <td>|-----电子产品</td>
-                            <td class="align-right">
-                                <a href="/index.php?r=admin%2Fcategory%2Fmod&cateid=3">编辑</a>
-                                <a href="/index.php?r=admin%2Fcategory%2Fdel&cateid=3">删除</a></td>
-                        </tr>
-                        <tr class="first">
-                            <td>6</td>
-                            <td>|-----|-----手机</td>
-                            <td class="align-right">
-                                <a href="/index.php?r=admin%2Fcategory%2Fmod&cateid=6">编辑</a>
-                                <a href="/index.php?r=admin%2Fcategory%2Fdel&cateid=6">删除</a></td>
-                        </tr>
-                        <tr class="first">
-                            <td>4</td>
-                            <td>|-----充气娃娃</td>
-                            <td class="align-right">
-                                <a href="/index.php?r=admin%2Fcategory%2Fmod&cateid=4">编辑</a>
-                                <a href="/index.php?r=admin%2Fcategory%2Fdel&cateid=4">删除</a></td>
-                        </tr>
-                        <tr class="first">
-                            <td>5</td>
-                            <td>|-----|-----仓也空井也空</td>
-                            <td class="align-right">
-                                <a href="/index.php?r=admin%2Fcategory%2Fmod&cateid=5">编辑</a>
-                                <a href="/index.php?r=admin%2Fcategory%2Fdel&cateid=5">删除</a></td>
-                        </tr>
+                    <!-- row -->
+                    <?php foreach($cates as $cate): ?>
+                    <tr class="first">
+                      <td>
+                        <?php echo $cate['cateid'];?>
+                      </td>
+                      <td>
+                        <?php echo $cate['title']; ?>
+                      </td>
+                      <td class="algin-right">
+                        <a href="<?php echo yii\helpers\Url::to(['category/mod','cateid'=>$cate['cateid']]);?>">编辑</a>
+                        <a href="<?php echo yii\helpers\Url::to(['category/del','cateid'=>$cate['cateid']]);?>">删除</a>
+                      </td>
+                    </tr>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <div class="pagination pull-right"></div>
-            <!-- end users table --></div>
+            <div class="pagination pull-right">
+              <?php
+                  /*echo yii\widgets\LinkPager::widget([
+                  'pagination' => $pager,
+                  'prevPageLabel' => '&#8249;',
+                  'nextPageLabel' => '&#8250;',
+                  ]);*/
+                  ?>
+            </div>
+            <!-- end users table -->
+          </div>
     </div>
 </div>
 <!-- end main container -->
