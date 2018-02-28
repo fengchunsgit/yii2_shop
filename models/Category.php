@@ -99,4 +99,11 @@ class Category extends ActiveRecord
 
   }
 
+  public function getTreeList()
+  {
+    $data=$this->getData();
+    $tree=$this->getTree($data);
+    return $tree=$this->setPrefix($tree);
+  }
+
 }

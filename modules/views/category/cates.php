@@ -6,7 +6,7 @@
             <div class="row-fluid header">
                 <h3>分类列表</h3>
                 <div class="span10 pull-right">
-                    <a href="/index.php?r=admin%2Fcategory%2Fadd" class="btn-flat success pull-right">
+                    <a href="<?php echo yii\helpers\Url::to(['category/add']);?>" class="btn-flat success pull-right">
                         <span>&#43;</span>添加新分类</a></div>
             </div>
             <?php //显示提示信息
