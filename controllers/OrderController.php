@@ -1,5 +1,7 @@
 <?php
+
 namespace app\controllers;
+
 use app\controllers\CommonController;
 use Yii;
 use app\models\Order;
@@ -8,6 +10,7 @@ use app\models\Cart;
 use app\models\Product;
 use app\models\User;
 use app\models\Address;
+
 class OrderController extends CommonController
 {
     public function actionIndex()
@@ -15,6 +18,7 @@ class OrderController extends CommonController
         $this->layout = "layout2";
         return $this->render("index");
     }
+
     public function actionCheck()
     {
         if (Yii::$app->session['isLogin'] != 1) {
@@ -41,6 +45,7 @@ class OrderController extends CommonController
         $this->layout = "layout1";
         return $this->render("check", ['express' => $express, 'expressPrice' => $expressPrice, 'addresses' => $addresses, 'products' => $data]);
     }
+
     public function actionAdd()
     {
         if (Yii::$app->session['isLogin'] != 1) {
@@ -83,6 +88,7 @@ class OrderController extends CommonController
         }
         return $this->redirect(['order/check', 'orderid' => $orderid]);
     }
+
     public function actionConfirm()
     {
         //addressid, expressid, status, amount(orderid,userid)
@@ -128,5 +134,6 @@ class OrderController extends CommonController
             return $this->redirect(['index/index']);
         }
     }
+    
 }
 
