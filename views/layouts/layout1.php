@@ -44,17 +44,22 @@
         <div class="container">
             <div class="col-xs-12 col-sm-6 no-margin">
                 <ul>
-                    <li><a href="index.html">首页</a></li>
-                    <li><a href="category-grid.html">所有分类</a></li>
-                    <li><a href="cart.html">我的购物车</a></li>
-                    <li><a href="orders.html">我的订单</a></li>
+                    <li><a href="<?php echo yii\helpers\Url::to(['index/index']) ?>">首页</a></li>
+                <?php if (\Yii::$app->session['isLogin'] == 1): ?>
+                <li><a href="<?php echo yii\helpers\Url::to(['cart/index']) ?>">我的购物车</a></li>
+                <li><a href="<?php echo yii\helpers\Url::to(['order/index']) ?>">我的订单</a></li>
+                <?php endif; ?>
                 </ul>
             </div><!-- /.col -->
 
             <div class="col-xs-12 col-sm-6 no-margin">
                 <ul class="right">
-                    <li><a href="<?php echo yii\helpers\Url::to(['member/auth'])?>">注册</a></li>
-                    <li><a href="<?php echo yii\helpers\Url::to(['member/auth'])?>">登录</a></li>
+            <?php if (\Yii::$app->session['isLogin'] == 1): ?>
+                您好 , 欢迎您回来 <?php echo \Yii::$app->session['loginname']; ?> , <a href="<?php echo yii\helpers\Url::to(['member/logout']); ?>">退出</a>
+            <?php else: ?>
+                <li><a href="<?php echo yii\helpers\Url::to(['member/auth']); ?>">注册</a></li>
+                <li><a href="<?php echo yii\helpers\Url::to(['member/auth']); ?>">登录</a></li>
+            <?php endif; ?>
                 </ul>
             </div><!-- /.col -->
         </div><!-- /.container -->
@@ -133,66 +138,35 @@
                         </a>
 
                         <ul class="dropdown-menu">
-                            <li>
-                                <div class="basket-item">
-                                    <div class="row">
-                                        <div class="col-xs-4 col-sm-4 no-margin text-center">
-                                            <div class="thumb">
-                                                <img alt="" src="assets/images/products/product-small-01.jpg" />
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8 col-sm-8 no-margin">
-                                            <div class="title">前端课程</div>
-                                            <div class="price">￥270.00</div>
-                                        </div>
+    <?php foreach((array)$this->params['cart']['products'] as $product): ?>
+                    <li>
+                        <div class="basket-item">
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-4 no-margin text-center">
+                                    <div class="thumb">
+                                    <img alt="" src="http://<?php echo $product['cover'] ?>-picsmall" />
                                     </div>
-                                    <a class="close-btn" href="#"></a>
                                 </div>
-                            </li>
-
-                            <li>
-                                <div class="basket-item">
-                                    <div class="row">
-                                        <div class="col-xs-4 col-sm-4 no-margin text-center">
-                                            <div class="thumb">
-                                                <img alt="" src="assets/images/products/product-small-01.jpg" />
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8 col-sm-8 no-margin">
-                                            <div class="title">Java课程</div>
-                                            <div class="price">￥270.00</div>
-                                        </div>
-                                    </div>
-                                    <a class="close-btn" href="#"></a>
+                                <div class="col-xs-8 col-sm-8 no-margin">
+                                <div class="title"><?php echo $product['title'] ?></div>
+                                <div class="price">￥ <?php echo $product['price'] ?></div>
                                 </div>
-                            </li>
-
-                            <li>
-                                <div class="basket-item">
-                                    <div class="row">
-                                        <div class="col-xs-4 col-sm-4 no-margin text-center">
-                                            <div class="thumb">
-                                                <img alt="" src="assets/images/products/product-small-01.jpg" />
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-8 col-sm-8 no-margin">
-                                            <div class="title">PHP课程</div>
-                                            <div class="price">￥270.00</div>
-                                        </div>
-                                    </div>
-                                    <a class="close-btn" href="#"></a>
-                                </div>
-                            </li>
+                            </div>
+                            <a class="close-btn" href="<?php echo yii\helpers\Url::to(['cart/del', 'cartid' => $product['cartid']]) ?>"></a>
+                        </div>
+                    </li>
+    <?php endforeach; ?>
+  
 
 
                             <li class="checkout">
                                 <div class="basket-item">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6">
-                                            <a href="cart.html" class="le-button inverse">查看购物车</a>
+                                            <a href="<?php echo yii\helpers\Url::to(['cart/index']) ?>" class="le-button inverse">查看购物车</a>
                                         </div>
                                         <div class="col-xs-12 col-sm-6">
-                                            <a href="checkout.html" class="le-button">去往收银台</a>
+                                            <a href="<?php echo yii\helpers\Url::to(['cart/index']) ?>" class="le-button">去往收银台</a>
                                         </div>
                                     </div>
                                 </div>
@@ -544,6 +518,42 @@
 <script src="assets/js/jquery.customSelect.min.js"></script>
 <script src="assets/js/wow.min.js"></script>
 <script src="assets/js/scripts.js"></script>
+<script>
+        $("#createlink").click(function(){
+            $(".billing-address").slideDown();
+        });
+        $(".minus").click(function(){
+            var cartid = $("input[name=productnum]").attr('id');
+            var num = parseInt($("input[name=productnum]").val()) - 1;
+            var total = parseFloat($(".value.pull-right span").html());
+            var price = parseFloat($(".price span").html());
+            changeNum(cartid, num);
+            $(".value.pull-right span").html(total - price);
+            $(".value.pull-right.ordertotal span").html(total - price);
+        });
+        $(".plus").click(function(){
+            var cartid = $("input[name=productnum]").attr('id');
+            var num = parseInt($("input[name=productnum]").val()) + 1;
+            var total = parseFloat($(".value.pull-right span").html());
+            var price = parseFloat($(".price span").html());
+            changeNum(cartid, num);
+            $(".value.pull-right span").html(total + price);
+            $(".value.pull-right.ordertotal span").html(total + price);
+        });
+        function changeNum(cartid, num)
+        {
+            $.get('<?php echo yii\helpers\Url::to(['cart/mod']) ?>', {'productnum':num, 'cartid':cartid}, function(data){});
+        }
+        var total = parseFloat($("#total span").html());
+        $(".le-radio.express").click(function(){
+            var ototal = parseFloat($(this).attr('data')) + total;
+            $("#ototal span").html(ototal);
+        });
+        $("input.address").click(function(){
+            var addressid = $(this).val();
+            $("input[name=addressid]").val(addressid);
+        });
+</script>
 
 </body>
 </html>
